@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Pengunjung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .counter {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Statistik Pengunjung</h1>
+    <div class="counter">
+        <div id="todayCount">Request Count Today: 0</div>
+        <div id="allTimeCount">All Time Request Count: 0</div>
+    </div>
+
+    <script>
+        // Fungsi untuk mendapatkan data pengunjung dari server
+        function fetchVisitorCount() {
+            fetch('counter.php')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('todayCount').innerText = `Request Count Today: ${data.today}`;
+                    document.getElementById('allTimeCount').innerText = `All Time Request Count: ${data.all_time}`;
+                })
+                .catch(error => console.error('Error fetching visitor count:', error));
+        }
+
+        // Memanggil fungsi untuk mendapatkan data pengunjung saat halaman dimuat
+        fetchVisitorCount();
+
+        // Mengupdate data setiap 2 detik
+        setInterval(fetchVisitorCount, 2000);
+    </script>
+
+</body>
+</html>
